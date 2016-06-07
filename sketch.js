@@ -1,4 +1,9 @@
 var tick = 0;
+var message = "JUSTIN BIRMINGHAM",
+	font,
+	bounds, // holds x, y, w, h of the text's bounding box
+	fontsize = 60,
+	x, y; // x and y coordinates of the text
 // var squaresArray = [];
 
 // you always need a setup function in p5.js
@@ -10,7 +15,7 @@ function setup() {
 		window.innerHeight
 	);
 	background(100, 0, 100);
-	frameRate(3);
+	frameRate(10);
 	// for (var i = 0; i <= 50; i++) {
 	// 	var s = new FallingSquare();
 	// 	squaresArray.push(s);
@@ -29,13 +34,15 @@ function isEven(value) {
 function draw() {
 	// background(100, 0, 100);
 
-	fill(0, 200, 0);
-	stroke(0, 189, 150);
-	bezier(mouseX, mouseY, mouseY*1.01, mouseX+2, mouseX-4, mouseY-1, mouseX+30, mouseY+5)
+//	fill(0, 200, 0);
+//	stroke(0, 189, 150);
+//	bezier(mouseX, mouseY, mouseY*1.01, mouseX+2, mouseX-4, mouseY-1, mouseX+30, mouseY+5)
 	if (isEven(tick))
 		background(100, 0, 100);
+		
 	else
 		background(0, 100, 0);
+	
 	// rect(
 	// mouseX,
 	// yRect,
@@ -57,7 +64,7 @@ function draw() {
 	//  30
 	//  );
 	// debugger;
-	tick = tick + 101;
+	tick = tick + 1;
 }
 
 // function mousePressed() {
