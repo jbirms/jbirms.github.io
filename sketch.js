@@ -10,7 +10,7 @@ function setup() {
 		window.innerHeight
 	);
 	background(100, 0, 100);
-	frameRate(10);
+	frameRate(3);
 	// for (var i = 0; i <= 50; i++) {
 	// 	var s = new FallingSquare();
 	// 	squaresArray.push(s);
