@@ -57,7 +57,7 @@ function draw() {
 	//  30
 	//  );
 	// debugger;
-	tick = tick + 13;
+	tick = tick + 101;
 }
 
 // function mousePressed() {
