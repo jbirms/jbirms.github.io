@@ -1,8 +1,6 @@
 
 var flock;
 
-var text;
-
 var initX;
 var initY;
 
@@ -13,7 +11,7 @@ function setup() {
   flock = new Flock();
   // Add an initial set of boids into the system
   for (var i = 0; i < 1; i++) {
-    var b = new Boid(width/2,height/2);
+    var b = new Boid(width/2,height/2,5,-4);
     flock.addBoid(b);
   }
 }
@@ -73,7 +71,7 @@ Flock.prototype.addBoid = function(b) {
 // Methods for Separation, Cohesion, Alignment added
 
 function Boid(x, y, vx, vy) {
-  this.acceleration = createVector(.3,0);
+  this.acceleration = createVector(0,0);
 //  this.velocity = createVector(random(-1,1),random(-1,1));
   this.velocity = createVector(vx, vy);
   this.position = createVector(x,y);
