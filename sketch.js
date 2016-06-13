@@ -10,15 +10,22 @@ function setup() {
   
   flock = new Flock();
   // Add an initial set of boids into the system
-  for (var i = 0; i < 1; i++) {
-    var b = new Boid(width/2,height/2,5,-4);
+  for (var i = 0; i < 5; i++) {
+    var b = new Boid(width/2,height/2,random(10),-1*random(15));
     flock.addBoid(b);
   }
 }
 
 function draw() {
   background(100, 0, 100, 3);
+  // ellipse(width*3/4, height/10, 50, 20);
+  // ellipse(width/4, height/10, 50, 20);
   flock.run();
+  rect(0,0,50,30,0,0,15,0);
+  fill(0,50,100);
+  text("C 2 C", 10, 10, 50, 30);
+  fill(255);
+
 }
 
 // Add a new boid into the System
@@ -39,6 +46,10 @@ function mousePressed() {
 function mouseDragged() {
   line(initX, initY, mouseX, mouseY);
   stroke(126);
+}
+
+function clickLink1() {
+  window.location="http://jbirms.github.io/bikeandbuild_maps/c2c/";
 }
 
 // The Nature of Code
@@ -80,10 +91,12 @@ function Boid(x, y, vx, vy) {
   this.maxforce = 0.05; // Maximum steering force
 }
 
-function Anchor(x,y) {
-  this.position = createVector(x,y);
-  this.velocity = createVector(0,0);
-  
+function LinkButton(x1, y1, x2, y2, label, target_url) {
+  this.position = createVector(x1 ,y1);
+  this.edge = createVector(x2, y2);
+  this.text = label;
+  this.url = target_url;
+
 } 	
 
 Boid.prototype.run = function(boids) {
@@ -91,6 +104,7 @@ Boid.prototype.run = function(boids) {
   this.update();
   this.borders();
   this.render();
+  this.collision();
 }
 
 Boid.prototype.applyForce = function(force) {
@@ -98,22 +112,10 @@ Boid.prototype.applyForce = function(force) {
   this.acceleration.add(force);
 }
 
-// We accumulate a new acceleration each time based on three rules
+// We accumulate a new acceleration each time based on gravity
 
 Boid.prototype.flock = function(boids) {
-  // var sep = this.separate(boids);   // Separation
-  // var ali = this.align(boids);      // Alignment
-  // var coh = this.cohesion(boids);   // Cohesion
   var grav = this.gravity(boids);
-  // Arbitrarily weight these forces
-  // sep.mult(1.5);
-  // ali.mult(1.0);
-  // coh.mult(1.0);
-  grav.mult(1.0);
-  // Add the force vectors to acceleration
-  // this.applyForce(sep);
-  // this.applyForce(ali);
-  // this.applyForce(coh);
   this.applyForce(grav);
 }
 
@@ -128,23 +130,11 @@ Boid.prototype.update = function() {
   this.acceleration.mult(0);
 }
 
-// A method that calculates and applies a steering force towards a target
-// STEER = DESIRED MINUS VELOCITY
-// Boid.prototype.seek = function(target) {
-//   var desired = p5.Vector.sub(target,this.position);  // A vector pointing from the location to the target
-//   // Normalize desired and scale to maximum speed
-//   desired.normalize();
-//   desired.mult(this.maxspeed);
-//   // Steering = Desired minus Velocity
-//   var steer = p5.Vector.sub(desired,this.velocity);
-//   steer.limit(this.maxforce);  // Limit to maximum steering force
-//   return steer;
-// }
 
 Boid.prototype.render = function() {
   // Draw a triangle rotated in the direction of velocity
   var theta = this.velocity.heading() + radians(90);
-  fill(127);
+  fill(random(255), random(255), random(255));
   stroke(200);
   push();
   translate(this.position.x,this.position.y);
@@ -159,93 +149,16 @@ Boid.prototype.render = function() {
 
 // Wraparound
 Boid.prototype.borders = function() {
-  if (this.position.x < -this.r)  this.position.x = width +this.r;
-  // if (this.position.y < -this.r)  this.position.y = height+this.r;
-  if (this.position.x > width +this.r) this.position.x = -this.r;
-  if (this.position.y > height) this.velocity.y = -.9*this.velocity.y;
+  if (this.position.x < -this.r)  this.velocity.x = -this.velocity.x;
+  if (this.position.y < -this.r)  this.velocity.y = -this.velocity.y;
+  if (this.position.x > width -this.r) this.velocity.x = -this.velocity.x;
+  // if (this.position.y > height) this.velocity.y = -.9*this.velocity.y;
 }
 
-
-// // Separation
-// // Method checks for nearby boids and steers away
-// Boid.prototype.separate = function(boids) {
-//   var desiredseparation = 25.0;
-//   var steer = createVector(0,0);
-//   var count = 0;
-//   // For every boid in the system, check if it's too close
-//   for (var i = 0; i < boids.length; i++) {
-//     var d = p5.Vector.dist(this.position,boids[i].position);
-//     // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
-//     if ((d > 0) && (d < desiredseparation)) {
-//       // Calculate vector pointing away from neighbor
-//       var diff = p5.Vector.sub(this.position,boids[i].position);
-//       diff.normalize();
-//       diff.div(d);        // Weight by distance
-//       steer.add(diff);
-//       count++;            // Keep track of how many
-//     }
-//   }
-//   // Average -- divide by how many
-//   if (count > 0) {
-//     steer.div(count);
-//   }
-
-//   // As long as the vector is greater than 0
-//   if (steer.mag() > 0) {
-//     // Implement Reynolds: Steering = Desired - Velocity
-//     steer.normalize();
-//     steer.mult(this.maxspeed);
-//     steer.sub(this.velocity);
-//     steer.limit(this.maxforce);
-//   }
-//   return steer;
-// }
-
-// // Alignment
-// // For every nearby boid in the system, calculate the average velocity
-// Boid.prototype.align = function(boids) {
-//   var neighbordist = 50;
-//   var sum = createVector(0,0);
-//   var count = 0;
-//   for (var i = 0; i < boids.length; i++) {
-//     var d = p5.Vector.dist(this.position,boids[i].position);
-//     if ((d > 0) && (d < neighbordist)) {
-//       sum.add(boids[i].velocity);
-//       count++;
-//     }
-//   }
-//   if (count > 0) {
-//     sum.div(count);
-//     sum.normalize();
-//     sum.mult(this.maxspeed);
-//     var steer = p5.Vector.sub(sum,this.velocity);
-//     steer.limit(this.maxforce);
-//     return steer;
-//   } else {
-//     return createVector(0,0);
-//   }
-// }
-
-// // Cohesion
-// // For the average location (i.e. center) of all nearby boids, calculate steering vector towards that location
-// Boid.prototype.cohesion = function(boids) {
-//   var neighbordist = 50;
-//   var sum = createVector(0,0);   // Start with empty vector to accumulate all locations
-//   var count = 0;
-//   for (var i = 0; i < boids.length; i++) {
-//     var d = p5.Vector.dist(this.position,boids[i].position);
-//     if ((d > 0) && (d < neighbordist)) {
-//       sum.add(boids[i].position); // Add location
-//       count++;
-//     }
-//   }
-//   if (count > 0) {
-//     sum.div(count);
-//     return this.seek(sum);  // Steer towards the location
-//   } else {
-//     return createVector(0,0);
-//   }
-// }
+// Link collision
+Boid.prototype.collision = function() {
+  if (this.position.x < 50 && this.position.y < 30) clickLink1();
+}
 
 Boid.prototype.gravity = function(boids) {
   var accel = .2;
