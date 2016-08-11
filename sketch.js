@@ -22,9 +22,14 @@ function draw() {
   // ellipse(width/4, height/10, 50, 20);
   flock.run();
   rect(0,0,50,30,0,0,15,0);
-  fill(0,50,100);
-  text("C 2 C", 10, 10, 50, 30);
   fill(255);
+  text("C 2 C", 10, 10, 50, 30);
+  // fill(255);
+  fill(random(255),random(255),random(255));
+  rect(window.innerWidth - 80,0,80,25,0,0,0,15);
+  fill(255);
+  text("My Resume", window.innerWidth - 70, 5, 80, 30);
+  
 
 }
 
@@ -50,6 +55,10 @@ function mouseDragged() {
 
 function clickLink1() {
   window.location="http://jbirms.github.io/bikeandbuild_maps/c2c/";
+}
+
+function clickLink2() {
+  window.location="http://jbirms.github.io/resume/resume.pdf";
 }
 
 // The Nature of Code
@@ -79,7 +88,6 @@ Flock.prototype.addBoid = function(b) {
 // http://natureofcode.com
 
 // Boid class
-// Methods for Separation, Cohesion, Alignment added
 
 function Boid(x, y, vx, vy) {
   this.acceleration = createVector(0,0);
@@ -158,6 +166,7 @@ Boid.prototype.borders = function() {
 // Link collision
 Boid.prototype.collision = function() {
   if (this.position.x < 50 && this.position.y < 30) clickLink1();
+  if (this.position.x > window.innerWidth - 80 && this.position.y < 30) clickLink2();
 }
 
 Boid.prototype.gravity = function(boids) {
