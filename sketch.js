@@ -11,7 +11,7 @@ function setup() {
   flock = new Flock();
   // Add an initial set of boids into the system
   for (var i = 0; i < 5; i++) {
-    var b = new Boid(width/2,height/2,random(10),-1*random(15));
+    var b = new Boid(width/2,height/2,random(5),-1*random(10));
     flock.addBoid(b);
   }
 }
