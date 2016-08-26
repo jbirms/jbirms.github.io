@@ -160,7 +160,7 @@ Boid.prototype.borders = function() {
   if (this.position.x < -this.r)  this.velocity.x = -this.velocity.x;
   if (this.position.y < -this.r)  this.velocity.y = -this.velocity.y;
   if (this.position.x > width -this.r) this.velocity.x = -this.velocity.x;
-  // if (this.position.y > height) this.velocity.y = -.9*this.velocity.y;
+  if (this.position.y > height) this.velocity.y = -.9*this.velocity.y;
 }
 
 // Link collision
