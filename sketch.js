@@ -170,7 +170,7 @@ Boid.prototype.collision = function() {
 }
 
 Boid.prototype.gravity = function(boids) {
-  var accel = .2;
+  var accel = .4;
   return createVector(0, accel);
 }
 
