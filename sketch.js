@@ -6,7 +6,7 @@ var initY;
 
 function setup() {
   createCanvas(window.innerWidth,window.innerHeight);
-  createP("Welcome to my dumb website!");
+//  createP("Welcome to my dumb website!");
   
   flock = new Flock();
   // Add an initial set of boids into the system
@@ -21,8 +21,6 @@ function draw() {
   // ellipse(width*3/4, height/10, 50, 20);
   // ellipse(width/4, height/10, 50, 20);
   flock.run();
-  rect(0,0,50,30,0,0,15,0);
-  fill(255);
 }
 
 // Add a new boid into the System
