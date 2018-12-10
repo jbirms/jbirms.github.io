@@ -6,7 +6,7 @@ var initY;
 
 function setup() {
   createCanvas(window.innerWidth,window.innerHeight);
-//  createP("Drag the mouse to generate new boids.");
+  createP("Welcome to my dumb website!");
   
   flock = new Flock();
   // Add an initial set of boids into the system
@@ -23,11 +23,6 @@ function draw() {
   flock.run();
   rect(0,0,50,30,0,0,15,0);
   fill(255);
-  text("C 2 C", 10, 10, 50, 30);
-  // fill(255);
-  fill(random(255),random(255),random(255));
-  
-
 }
 
 // Add a new boid into the System
@@ -48,10 +43,6 @@ function mousePressed() {
 function mouseDragged() {
   line(initX, initY, mouseX, mouseY);
   stroke(126);
-}
-
-function clickLink1() {
-  window.location="http://jbirms.github.io/bikeandbuild_maps/c2c/";
 }
 
 // The Nature of Code
@@ -154,11 +145,6 @@ Boid.prototype.borders = function() {
   if (this.position.y < -this.r)  this.velocity.y = -this.velocity.y;
   if (this.position.x > width -this.r) this.velocity.x = -this.velocity.x;
   if (this.position.y > height) this.velocity.y = -.9*this.velocity.y;
-}
-
-// Link collision
-Boid.prototype.collision = function() {
-  if (this.position.x < 50 && this.position.y < 30) clickLink1();
 }
 
 Boid.prototype.gravity = function(boids) {
