@@ -73,12 +73,10 @@ Flock.prototype.addBoid = function(b) {
 
 function Boid(x, y, vx, vy) {
   this.acceleration = createVector(0,0);
-//  this.velocity = createVector(random(-1,1),random(-1,1));
   this.velocity = createVector(vx, vy);
   this.position = createVector(x,y);
   this.r = 3;
   this.maxspeed = 30;    // Maximum speed
-  this.maxforce = 0.05; // Maximum steering force
 }
 
 function LinkButton(x1, y1, x2, y2, label, target_url) {
@@ -94,7 +92,6 @@ Boid.prototype.run = function(boids) {
   this.update();
   this.borders();
   this.render();
-  this.collision();
 }
 
 Boid.prototype.applyForce = function(force) {
