@@ -1,5 +1,5 @@
 
-![](./assets/smooth_face_zoom.gif)
+![](./assets/happy_shopper.jpg)
 
 Welcome to my personal site!
 
