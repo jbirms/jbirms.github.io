@@ -1,3 +1,5 @@
+name: Justin Birmingham
+description: Brooklyn based Software Engineer and Musician
 plugins:
   - jekyll-relative-links
 relative_links:

@@ -1,4 +1,3 @@
-# Justin Birmingham
 
 ![](./assets/smooth_face_zoom.gif)
 
